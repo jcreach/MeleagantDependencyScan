@@ -7,9 +7,9 @@ namespace MeleagantDependencyScan.Attributes;
 public class MeleagantInjectionAttribute : Attribute
 {
     /// <summary>
-    /// Gets or sets the lifetime of the service when the dependency is injected.
+    /// Gets or sets the lifetime of the service when the dependency is injected. Singleton by default
     /// </summary>
-    public ServiceLifetime LifeTime { get; set; }
+    public ServiceLifetime LifeTime { get; set; } = ServiceLifetime.Singleton;
 
     /// <summary>
     /// Gets or sets a boolean value indicating whether the service is visible from an interface or by the class itself. By default, the value is false (visible by the class itself).
