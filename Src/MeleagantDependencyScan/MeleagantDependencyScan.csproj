@@ -4,11 +4,28 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Julien Creach</Authors>
     <PackageTags>DI, ServiceProvider, Attribute</PackageTags>
     <Description>This library provide tools to facilitate dependency injection when using dotnet.</Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/jcreach/MeleagantDependencyScan.git</RepositoryUrl>
+    <PackageReleaseNotes>First version. Add the attribute identifying the component to be added to the extension's ServiceCollection in order to scan the Assembly.</PackageReleaseNotes>
+    <Copyright>$(Authors)</Copyright>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
