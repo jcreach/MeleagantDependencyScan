@@ -11,6 +11,8 @@ The purpose of this library is to provide tools to facilitate dependency injecti
 The simplest use case is the singleton without interfaces :
 
 ```CSharp
+using MeleagantDependencyScan.Attributes;
+
 [MeleagantInjection] // By default LifeTime is intialized to Singleton, so there's no need to specify it in this case
 public class AuthService
 {
@@ -23,6 +25,8 @@ public class AuthService
 Transient use case without interfaces :
 
 ```CSharp
+using MeleagantDependencyScan.Attributes;
+
 [MeleagantInjection(LifeTime = ServiceLifetime.Transient)]
 public class AuthService
 {
@@ -33,6 +37,8 @@ public class AuthService
 Scoped use case without interfaces :
 
 ```CSharp
+using MeleagantDependencyScan.Attributes;
+
 [MeleagantInjection(LifeTime = ServiceLifetime.Scoped)]
 public class AuthService
 {
@@ -54,6 +60,8 @@ public interface IAuthService
 And a custom auth service that implement this interface here it's `MySuperAuthService`. And we needed it with the scoped life time.
 
 ```CSharp
+using MeleagantDependencyScan.Attributes;
+
 [MeleagantInjection(LifeTime = ServiceLifetime.Scoped, VisibleFromInterface = true, VisibleAs = [typeof(IAuthService)])]
 public class MySuperAuthService : IAuthService
 {
@@ -72,6 +80,10 @@ To register your classes in the `ServiceCollection` you must add the `ScanAssemb
 #### Single assembly
 
 ```CSharp
+using MeleagantDependencyScan.Extensions;
+
+// Some logic ...
+
 // Use this instruction
 builder.Services.ScanAssemblies("MySuperAssembly");
 
@@ -82,6 +94,10 @@ var app = builder.Build();
 #### Multiple assembly
 
 ```CSharp
+using MeleagantDependencyScan.Extensions;
+
+// Some logic ...
+
 // Use this instruction
 builder.Services.ScanAssemblies("MySuperAssembly", "MyAwesomeAssembly");
 

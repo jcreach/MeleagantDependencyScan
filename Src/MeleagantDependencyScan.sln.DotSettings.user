@@ -1,6 +1,0 @@
-﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b2dce986_002Dca6b_002D4956_002D85c3_002D2a4594d3d794/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="MeleagantServiceCollectionExtensionsTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::BF3FAAE2-0ECF-411C-8D2B-AAD2DE36CF8C::net8.0::MeleagantDependencyScan.UnitTest.MeleagantServiceCollectionExtensionsTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
