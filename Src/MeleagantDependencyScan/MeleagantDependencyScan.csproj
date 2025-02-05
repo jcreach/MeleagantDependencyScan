@@ -4,7 +4,7 @@
     <TargetFrameworks>net8.0;net7.0;net6.0;net5.0</TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <Authors>Julien Creach</Authors>
     <PackageTags>DI, ServiceProvider, Attribute</PackageTags>
     <Description>This library provide tools to facilitate dependency injection when using dotnet.</Description>
@@ -12,7 +12,7 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/jcreach/MeleagantDependencyScan.git</RepositoryUrl>
-    <PackageReleaseNotes>First version. Add the attribute identifying the component to be added to the extension's ServiceCollection in order to scan the Assembly.</PackageReleaseNotes>
+    <PackageReleaseNotes>Add the attribute identifying the component to be added to the extension's ServiceCollection by key in order to scan the Assembly.</PackageReleaseNotes>
     <Copyright>$(Authors)</Copyright>
   </PropertyGroup>
 
