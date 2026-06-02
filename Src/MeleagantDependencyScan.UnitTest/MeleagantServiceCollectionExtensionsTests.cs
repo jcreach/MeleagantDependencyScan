@@ -1,7 +1,5 @@
-using System.Data.SqlTypes;
 using System.Linq;
 using System.Reflection;
-using FluentAssertions;
 using MeleagantDependencyScan.Extensions;
 using MeleagantDependencyScan.UnitTest.TestServices;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,12 +22,12 @@ namespace MeleagantDependencyScan.UnitTest
             // Act
 
             var testResult = sc.Where(s =>
-                s.ImplementationType == typeof(HelloWorldTransientServices) 
+                s.ImplementationType == typeof(HelloWorldTransientServices)
                 && s.Lifetime == ServiceLifetime.Transient);
 
             // Assert
-            
-            testResult.Should().NotBeNullOrEmpty().And.HaveCount(1);
+
+            Assert.Single(testResult);
         }
 
         [Fact]
@@ -44,12 +42,12 @@ namespace MeleagantDependencyScan.UnitTest
             // Act
 
             var testResult = sc.Where(s =>
-                s.ImplementationType == typeof(HelloWorldScopedServices) 
+                s.ImplementationType == typeof(HelloWorldScopedServices)
                 && s.Lifetime == ServiceLifetime.Scoped);
 
             // Assert
 
-            testResult.Should().NotBeNullOrEmpty().And.HaveCount(1);
+            Assert.Single(testResult);
         }
 
         [Fact]
@@ -64,12 +62,12 @@ namespace MeleagantDependencyScan.UnitTest
             // Act
 
             var testResult = sc.Where(s =>
-                s.ImplementationType == typeof(HelloWorldSingletonServices) 
+                s.ImplementationType == typeof(HelloWorldSingletonServices)
                 && s.Lifetime == ServiceLifetime.Singleton);
 
             // Assert
 
-            testResult.Should().NotBeNullOrEmpty().And.HaveCount(1);
+            Assert.Single(testResult);
         }
 
         [Fact]
@@ -83,13 +81,13 @@ namespace MeleagantDependencyScan.UnitTest
 
             // Act
 
-            var testResult = sc.Where(s => s.ServiceType == typeof(IHelloWorldService) 
-                                           && s.ImplementationType == typeof(HelloWorldTransientServicesWithInterface) 
+            var testResult = sc.Where(s => s.ServiceType == typeof(IHelloWorldService)
+                                           && s.ImplementationType == typeof(HelloWorldTransientServicesWithInterface)
                                            && s.Lifetime == ServiceLifetime.Transient);
 
             // Assert
 
-            testResult.Should().NotBeNullOrEmpty().And.HaveCount(1);
+            Assert.Single(testResult);
         }
 
         [Fact]
@@ -104,12 +102,12 @@ namespace MeleagantDependencyScan.UnitTest
             // Act
 
             var testResult = sc.Where(s => s.ServiceType == typeof(IHelloWorldService)
-                                           && s.ImplementationType == typeof(HelloWorldScopedServicesWithInterface) 
+                                           && s.ImplementationType == typeof(HelloWorldScopedServicesWithInterface)
                                            && s.Lifetime == ServiceLifetime.Scoped);
 
             // Assert
 
-            testResult.Should().NotBeNullOrEmpty().And.HaveCount(1);
+            Assert.Single(testResult);
         }
 
         [Fact]
@@ -124,12 +122,12 @@ namespace MeleagantDependencyScan.UnitTest
             // Act
 
             var testResult = sc.Where(s => s.ServiceType == typeof(IHelloWorldService)
-                && s.ImplementationType == typeof(HelloWorldSingletonServicesWithInterface) 
+                && s.ImplementationType == typeof(HelloWorldSingletonServicesWithInterface)
                 && s.Lifetime == ServiceLifetime.Singleton);
 
             // Assert
 
-            testResult.Should().NotBeNullOrEmpty().And.HaveCount(1);
+            Assert.Single(testResult);
         }
 
         #endregion
@@ -150,13 +148,13 @@ namespace MeleagantDependencyScan.UnitTest
             var testResult = sc.Where(s => s.ServiceType == typeof(IHelloWorldKeyedServices)
                                            && s.IsKeyedService
                                            && s.ServiceKey!.ToString() == "TKeyA"
-                                            && s.KeyedImplementationType == typeof(HelloWorldKeyedTransientServicesWithInterfaceKeyA) 
+                                            && s.KeyedImplementationType == typeof(HelloWorldKeyedTransientServicesWithInterfaceKeyA)
                                             && s.Lifetime == ServiceLifetime.Transient);
-            
+
             // Assert
-            testResult.Should().NotBeNullOrEmpty().And.HaveCount(1);
+            Assert.Single(testResult);
         }
-        
+
         [Theory]
         [InlineData("TKeyA")]
         [InlineData("TKeyB")]
@@ -168,15 +166,15 @@ namespace MeleagantDependencyScan.UnitTest
             sc.Clear();
             sc.ScanKeyedAssemblies(Assembly.GetExecutingAssembly().GetName().Name!);
             var sp = sc.BuildServiceProvider();
-            
+
             // Act
 
             var testResult = sp.GetKeyedService<IHelloWorldKeyedServices>(key)?.SayHiKeyed($"{key} service");
- 
+
             // Assert
-            testResult.Should().Be($"Hello Keyed World {key} service with interface");
+            Assert.Equal($"Hello Keyed World {key} service with interface", testResult);
         }
-        
+
         [Fact]
         public void ServiceCollection_Should_Contain_Keyed_Scoped_Visible_By_Interface_HelloWorldKeyedService()
         {
@@ -191,14 +189,14 @@ namespace MeleagantDependencyScan.UnitTest
             var testResult = sc.Where(s => s.ServiceType == typeof(IHelloWorldKeyedServices)
                                            && s.IsKeyedService
                                            && s.ServiceKey!.ToString() == "SKeyA"
-                                           && s.KeyedImplementationType == typeof(HelloWorldKeyedScopedServicesWithInterfaceKeyA) 
+                                           && s.KeyedImplementationType == typeof(HelloWorldKeyedScopedServicesWithInterfaceKeyA)
                                            && s.Lifetime == ServiceLifetime.Scoped);
-            
+
             // Assert
-            
-            testResult.Should().NotBeNullOrEmpty().And.HaveCount(1);
+
+            Assert.Single(testResult);
         }
-        
+
         [Theory]
         [InlineData("SKeyA")]
         [InlineData("SKeyB")]
@@ -210,16 +208,16 @@ namespace MeleagantDependencyScan.UnitTest
             sc.Clear();
             sc.ScanKeyedAssemblies(Assembly.GetExecutingAssembly().GetName().Name!);
             var sp = sc.BuildServiceProvider();
-            
+
             // Act
 
             var testResult = sp.GetKeyedService<IHelloWorldKeyedServices>(key)?.SayHiKeyed($"{key} service");
- 
+
             // Assert
-            
-            testResult.Should().Be($"Hello Keyed World {key} service with interface");
+
+            Assert.Equal($"Hello Keyed World {key} service with interface", testResult);
         }
-        
+
         [Fact]
         public void ServiceCollection_Should_Contain_Keyed_Singleton_Visible_By_Interface_HelloWorldKeyedService()
         {
@@ -234,14 +232,14 @@ namespace MeleagantDependencyScan.UnitTest
             var testResult = sc.Where(s => s.ServiceType == typeof(IHelloWorldKeyedServices)
                                            && s.IsKeyedService
                                            && s.ServiceKey!.ToString() == "SiKeyA"
-                                           && s.KeyedImplementationType == typeof(HelloWorldKeyedSingletonServicesWithInterfaceKeyA) 
+                                           && s.KeyedImplementationType == typeof(HelloWorldKeyedSingletonServicesWithInterfaceKeyA)
                                            && s.Lifetime == ServiceLifetime.Singleton);
-            
+
             // Assert
-            
-            testResult.Should().NotBeNullOrEmpty().And.HaveCount(1);
+
+            Assert.Single(testResult);
         }
-        
+
         [Theory]
         [InlineData("SiKeyA")]
         [InlineData("SiKeyB")]
@@ -253,14 +251,14 @@ namespace MeleagantDependencyScan.UnitTest
             sc.Clear();
             sc.ScanKeyedAssemblies(Assembly.GetExecutingAssembly().GetName().Name!);
             var sp = sc.BuildServiceProvider();
-            
+
             // Act
 
             var testResult = sp.GetKeyedService<IHelloWorldKeyedServices>(key)?.SayHiKeyed($"{key} service");
- 
+
             // Assert
-            
-            testResult.Should().Be($"Hello Keyed World {key} service with interface");
+
+            Assert.Equal($"Hello Keyed World {key} service with interface", testResult);
         }
 
         #endregion
