@@ -64,4 +64,18 @@ namespace MeleagantDependencyScan.UnitTest.TestServices
             return $"Hello World {fromWho} with interface";
         }
     }
+
+    [MeleagantInjectionKeyed(LifeTime = ServiceLifetime.Transient, KeyName = "KTransient")]
+    public class HelloWorldKeyedTransientServices() : HelloWorldServices("Keyed transient")
+    {
+    }
+
+    [MeleagantInjectionKeyed(LifeTime = ServiceLifetime.Transient, KeyName = "KTransientWithInterface")]
+    public class HelloWorldKeyedTransientServicesWithInterface() : IHelloWorldService
+    {
+        public string SayHi(string fromWho = "Transient")
+        {
+            return $"Hello Keyed World {fromWho} with interface";
+        }
+    }
 }

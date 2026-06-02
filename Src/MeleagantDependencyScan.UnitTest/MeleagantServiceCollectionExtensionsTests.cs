@@ -128,5 +128,26 @@ namespace MeleagantDependencyScan.UnitTest
 
             testResult.Should().NotBeNullOrEmpty().And.HaveCount(1);
         }
+
+        [Fact]
+        public void ServiceCollection_Should_Contain_Keyed_Transient_Visible_By_ItSelf_HelloWorldService()
+        {
+            // Arrange
+
+            var sc = new ServiceCollection();
+            sc.Clear();
+            sc.ScanKeyedAssemblies(Assembly.GetExecutingAssembly().GetName().Name!);
+
+            // Act
+            var toto = sc.Where(s => s.ImplementationType == typeof(HelloWorldKeyedTransientServices));
+            var testResult = sc.Where(s =>
+                s.ImplementationType == typeof(HelloWorldKeyedTransientServices)
+                && s is { Lifetime: ServiceLifetime.Transient, IsKeyedService: true }
+                && (string)s.ServiceKey! == "KTransient");
+
+            // Assert
+
+            testResult.Should().NotBeNullOrEmpty().And.HaveCount(1);
+        }
     }
 }
