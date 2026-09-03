@@ -12,6 +12,47 @@ internal interface IHelloWorldService
 {
     string SayHi(string fromWho);
 }
+
+internal interface IMockGenericInterface<TRequest, TResponse>
+{
+    string Execute(TRequest request);
+}
+
+[MeleagantInjection(LifeTime = ServiceLifetime.Scoped, VisibleFromInterface = true, VisibleAs = [typeof(IMockGenericInterface<,>)])]
+public class MockGenericClass<TRequest, TResponse> : IMockGenericInterface<TRequest, TResponse>
+{
+    public string Execute(TRequest request)
+    {
+        return $"Executed {request}";
+    }
+}
+
+[MeleagantInjection(LifeTime = ServiceLifetime.Transient, VisibleFromInterface = true, VisibleAs = [typeof(IMockGenericInterface<,>)])]
+public class MockGenericTransientClass<TRequest, TResponse> : IMockGenericInterface<TRequest, TResponse>
+{
+    public string Execute(TRequest request)
+    {
+        return $"Executed transient {request}";
+    }
+}
+
+[MeleagantInjection(LifeTime = ServiceLifetime.Singleton, VisibleFromInterface = true, VisibleAs = [typeof(IMockGenericInterface<,>)])]
+public class MockGenericSingletonClass<TRequest, TResponse> : IMockGenericInterface<TRequest, TResponse>
+{
+    public string Execute(TRequest request)
+    {
+        return $"Executed singleton {request}";
+    }
+}
+
+internal sealed class MockRequest
+{
+}
+
+internal sealed class MockResponse
+{
+}
+
 public class HelloWorldServices(string fromWho)
 {
     private string FromWho = fromWho;
